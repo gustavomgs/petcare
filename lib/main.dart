@@ -2,10 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:petcare/States/home-sate.dart';
 import 'package:splashscreen/splashscreen.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'States/login-state.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override

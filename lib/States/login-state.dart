@@ -14,42 +14,49 @@ class _LoginStateState extends State<LoginState> {
       body: Container(
           alignment: Alignment.center,
           padding: EdgeInsets.only(top: 100),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/logos.png',
-                scale: 2,
-              ),
-              Text(
-                'FAZER LOGIN',
-                style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-              ),
-              Padding(padding: EdgeInsets.only(bottom: 100)),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                child: Column(
-                  children: [
-                    LoginButton(
-                      color: Color(0xff1A4789),
-                      image: 'assets/face.png',
-                      text: 'Entrar com Facebook',
-                      route: 'homestate',
+          child: Expanded(
+            child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/logos.png',
+                    scale: 2,
+                  ),
+                  Text(
+                    'FAZER LOGIN',
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                  Padding(padding: EdgeInsets.only(bottom: 100)),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: Column(
+                      children: [
+                        LoginButton(
+                          color: Color(0xff1A4789),
+                          image: 'assets/face.png',
+                          text: 'Entrar com Facebook',
+                          route: 'homestate',
+                          tag: 1,
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        LoginButton(
+                          color: Color(0xffDC4E41),
+                          image: 'assets/goog.png',
+                          text: 'Entrar com Google',
+                          route: 'homestate',
+                          tag: 2,
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    LoginButton(
-                      color: Color(0xffDC4E41),
-                      image: 'assets/goog.png',
-                      text: 'Entrar com Google',
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
+            ),
           )),
     );
   }
