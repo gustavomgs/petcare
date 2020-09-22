@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:petcare/Widgets/login-button.dart';
+import 'package:flutter_signin_button/button_list.dart';
+import 'package:flutter_signin_button/button_view.dart';
+import 'package:petcare/States/home-sate.dart';
+import 'package:petcare/blocs/auth_bloc.dart';
+import 'package:provider/provider.dart';
 
 class LoginState extends StatefulWidget {
   @override
@@ -9,6 +13,7 @@ class LoginState extends StatefulWidget {
 class _LoginStateState extends State<LoginState> {
   @override
   Widget build(BuildContext context) {
+    var authBloc = Provider.of<AuthBloc>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
@@ -34,23 +39,35 @@ class _LoginStateState extends State<LoginState> {
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     child: Column(
                       children: [
-                        LoginButton(
+                        SignInButton(
+                          Buttons.FacebookNew,
+                          onPressed: () => authBloc.loginFacebook(),
+                          text: 'Entrar com Facebook',
+                        ),
+                        /* LoginButton(
                           color: Color(0xff1A4789),
                           image: 'assets/face.png',
                           text: 'Entrar com Facebook',
                           route: 'homestate',
                           tag: 1,
-                        ),
+                        ), */
                         SizedBox(
                           height: 5,
                         ),
-                        LoginButton(
+                        SignInButton(
+                          Buttons.GoogleDark,
+                          onPressed: () => Navigator.of(context)
+                              .pushReplacement(MaterialPageRoute(
+                                  builder: (context) => HomeState())),
+                          text: 'Entrar com Google',
+                        ),
+                        /* LoginButton(
                           color: Color(0xffDC4E41),
                           image: 'assets/goog.png',
                           text: 'Entrar com Google',
                           route: 'homestate',
                           tag: 2,
-                        ),
+                        ), */
                       ],
                     ),
                   ),
