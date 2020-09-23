@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petcare/States/login-state.dart';
 
 class MyDrawer extends StatelessWidget {
   @override
@@ -11,11 +12,10 @@ class MyDrawer extends StatelessWidget {
           children: [
             UserAccountsDrawerHeader(
                 currentAccountPicture: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      'https://media.discordapp.net/attachments/706822572385239072/748730026215604304/logo_petcarepng.png'),
+                  backgroundImage: NetworkImage(photoUrl),
                 ),
-                accountName: Text('Nome Usuario'),
-                accountEmail: Text('usuarioemail.com')),
+                accountName: Text(name),
+                accountEmail: Text(email)),
             ListTile(
               leading: Icon(Icons.home),
               title: Text('Inicio'),

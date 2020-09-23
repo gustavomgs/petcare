@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:petcare/States/home-sate.dart';
-import 'package:petcare/blocs/auth_bloc.dart';
 import 'package:splashscreen/splashscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:provider/provider.dart';
 import 'States/login-state.dart';
 
 void main() async {
@@ -16,20 +14,17 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Provider(
-      create: (context) => AuthBloc(),
-      child: MaterialApp(
-        title: 'Pet X',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        debugShowCheckedModeBanner: false,
-        initialRoute: '/',
-        routes: <String, WidgetBuilder>{
-          HomeState.routeName: (context) => new HomeState(),
-        },
-        home: MyHomePage(),
+    return MaterialApp(
+      title: 'Pet X',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
+      debugShowCheckedModeBanner: false,
+      initialRoute: '/',
+      routes: <String, WidgetBuilder>{
+        HomeState.routeName: (context) => new HomeState(),
+      },
+      home: MyHomePage(),
     );
   }
 }

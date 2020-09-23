@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:petcare/States/home-sate.dart';
-import 'package:petcare/blocs/auth_bloc.dart';
-import 'package:provider/provider.dart';
+
+String name, email, photoUrl;
 
 class LoginState extends StatefulWidget {
   @override
@@ -11,9 +13,43 @@ class LoginState extends StatefulWidget {
 }
 
 class _LoginStateState extends State<LoginState> {
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+  Future<String> googleSignIn() async {
+    final GoogleSignInAccount googleSignInAccount =
+        await _googleSignIn.signIn();
+
+    final GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount.authentication;
+
+    final AuthCredential authCredential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken);
+
+    final UserCredential userCredential =
+        await _firebaseAuth.signInWithCredential(authCredential);
+
+    final User user = userCredential.user;
+
+    assert(user.displayName != null);
+    assert(user.email != null);
+    assert(user.photoURL != null);
+
+    setState(() {
+      name = user.displayName;
+      email = user.email;
+      photoUrl = user.photoURL;
+    });
+
+    final User currentUser = _firebaseAuth.currentUser;
+    assert(currentUser.uid == user.uid);
+
+    return 'Logged In';
+  }
+
   @override
   Widget build(BuildContext context) {
-    var authBloc = Provider.of<AuthBloc>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
@@ -41,33 +77,20 @@ class _LoginStateState extends State<LoginState> {
                       children: [
                         SignInButton(
                           Buttons.FacebookNew,
-                          onPressed: () => authBloc.loginFacebook(),
+                          onPressed: () => {},
                           text: 'Entrar com Facebook',
                         ),
-                        /* LoginButton(
-                          color: Color(0xff1A4789),
-                          image: 'assets/face.png',
-                          text: 'Entrar com Facebook',
-                          route: 'homestate',
-                          tag: 1,
-                        ), */
                         SizedBox(
                           height: 5,
                         ),
                         SignInButton(
                           Buttons.GoogleDark,
-                          onPressed: () => Navigator.of(context)
-                              .pushReplacement(MaterialPageRoute(
-                                  builder: (context) => HomeState())),
+                          onPressed: () => googleSignIn().whenComplete(() =>
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) => HomeState()))),
                           text: 'Entrar com Google',
                         ),
-                        /* LoginButton(
-                          color: Color(0xffDC4E41),
-                          image: 'assets/goog.png',
-                          text: 'Entrar com Google',
-                          route: 'homestate',
-                          tag: 2,
-                        ), */
                       ],
                     ),
                   ),
