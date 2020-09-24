@@ -5,6 +5,10 @@ import 'package:flutter_signin_button/button_view.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:petcare/States/home-sate.dart';
 
+final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
 String name, email, photoUrl;
 
 class LoginState extends StatefulWidget {
@@ -13,8 +17,9 @@ class LoginState extends StatefulWidget {
 }
 
 class _LoginStateState extends State<LoginState> {
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  void initState() {
+    super.initState();
+  }
 
   Future<String> googleSignIn() async {
     final GoogleSignInAccount googleSignInAccount =
@@ -48,56 +53,48 @@ class _LoginStateState extends State<LoginState> {
     return 'Logged In';
   }
 
-  @override
+
+
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Container(
-          alignment: Alignment.center,
-          padding: EdgeInsets.only(top: 100),
-          child: Expanded(
-            child: Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'assets/logos.png',
-                    scale: 2,
-                  ),
-                  Text(
-                    'FAZER LOGIN',
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
-                  ),
-                  Padding(padding: EdgeInsets.only(bottom: 100)),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: Column(
-                      children: [
-                        SignInButton(
-                          Buttons.FacebookNew,
-                          onPressed: () => {},
-                          text: 'Entrar com Facebook',
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        SignInButton(
-                          Buttons.GoogleDark,
-                          onPressed: () => googleSignIn().whenComplete(() =>
-                              Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                      builder: (context) => HomeState()))),
-                          text: 'Entrar com Google',
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/logo.png',
+              scale: 2,
             ),
-          )),
+            SizedBox(
+              height: 30,
+            ),
+            SignInButton(
+              Buttons.FacebookNew,
+              onPressed: () => {},
+              text: 'Entrar com Facebook',
+            ),
+            SignInButton(
+              Buttons.GoogleDark,
+              onPressed: () {
+                googleSignIn().whenComplete(() {
+                  if (email.isNotEmpty) {
+                    Navigator.of(context).popAndPushNamed('/homestate');
+                  } else {
+                    return initState();
+                  }
+                });
+              },
+              text: 'Entrar com Google',
+            ),
+          ],
+        ),
+      ),
     );
+  }
+
+  void dispose() {
+    build(context);
+    super.dispose();
   }
 }
