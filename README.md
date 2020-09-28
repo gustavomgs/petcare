@@ -1,4 +1,4 @@
-# petcare
+# mypetcare
 
 A new Flutter application.
 

@@ -1,64 +1,36 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:petcare/States/home-sate.dart';
-import 'package:splashscreen/splashscreen.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'States/login-state.dart';
+import 'package:mypetcare/helpers/user-man.dart';
+import 'package:mypetcare/screens/home.dart';
+import 'package:mypetcare/screens/login/login_screen.dart';
+import 'package:provider/provider.dart';
 
-void main() async {
+void main() {
   runApp(MyApp());
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
 }
 
 class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Pet X',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return Provider(
+      create: (_) => UserManager(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'PetCare',
+        theme: ThemeData(
+          primaryColor: Colors.blue[900],
+          scaffoldBackgroundColor: Colors.white,
+        ),
+        initialRoute: '/',
+        routes: {
+          HomeState.routeName: (context) => new HomeState(),
+        },
+        home: LoginScreen(),
       ),
-      debugShowCheckedModeBanner: false,
-      initialRoute: '/',
-      routes: <String, WidgetBuilder>{
-        HomeState.routeName: (context) => new HomeState(),
-      },
-      home: MyHomePage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return _introScreen();
-  }
-}
-
-Widget _introScreen() {
-  return Stack(
-    children: <Widget>[
-      SplashScreen(
-        seconds: 3,
-        backgroundColor: Colors.white,
-        navigateAfterSeconds: LoginState(),
-        loaderColor: Colors.white,
-      ),
-      Center(
-        child: Image.asset(
-          'assets/logo.png',
-          scale: 2,
-        ),
-      )
-    ],
-  );
-}
+//TODO FAZER A PAGINA DE CADASTRO
+//TODO FAZER A PADINA DE RECUPERAR SENHA VIA EMAIL
+//TODO FAZER UM DRAWER COM NAVEGAÇÃO STATICA UTILIZANDO PROVIDER
