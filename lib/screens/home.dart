@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mypetcare/widgets/my-appbar.dart';
+import 'package:mypetcare/widgets/my-drawer.dart';
 
 class HomeState extends StatefulWidget {
   static const routeName = '/home';
@@ -11,6 +12,7 @@ class _HomeStateState extends State<HomeState> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: MyDrawer(),
       appBar: myappBar(title: 'Home'),
     );
   }
