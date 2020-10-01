@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-Widget loginBar() {
+Widget loginBar({
+  String title = 'Login',
+}) {
   return AppBar(
     backgroundColor: Colors.white,
     elevation: 0,
     title: Text(
-      'Login',
+      title,
       style: TextStyle(color: Colors.black),
     ),
     centerTitle: true,
@@ -15,11 +17,11 @@ Widget loginBar() {
 
 Widget myappBar({
   Color colorBar,
-  Text title,
+  String title,
 }) {
   return AppBar(
     backgroundColor: colorBar,
-    title: title,
+    title: Text(title),
     actions: [
       IconButton(
           icon: Icon(

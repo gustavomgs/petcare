@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mypetcare/helpers/user-man.dart';
 import 'package:mypetcare/helpers/user.dart';
+import 'package:mypetcare/screens/home.dart';
 import 'package:mypetcare/widgets/buttons.dart';
 import 'package:mypetcare/widgets/input-widgets.dart';
 import 'package:mypetcare/widgets/my-appbar.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
+  static const String routeName = '/loginPage';
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -17,6 +19,19 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passcontroller = TextEditingController();
   @override
+  
+  void initState() {
+    super.initState();
+  }
+
+  void _pushPage() {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (BuildContext context) => HomeState()),
+      ModalRoute.withName('/home'),
+    );
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldkey,
@@ -60,10 +75,22 @@ class _LoginScreenState extends State<LoginScreen> {
                         ));
                       },
                       sucesso: () {
-                        Navigator.of(context).popAndPushNamed('/home');
+                        _pushPage();
                       });
                 }
               }),
+              SizedBox(
+                height: 10,
+              ),
+              FlatButton(
+                  onPressed: () =>
+                      Navigator.of(context).popAndPushNamed('/singpage'),
+                  child: Text(
+                    'Cadastar',
+                    style: TextStyle(
+                      color: Colors.blue[900],
+                    ),
+                  ))
             ],
           ),
         ),
@@ -75,9 +102,10 @@ class _LoginScreenState extends State<LoginScreen> {
     return Align(
       alignment: Alignment.centerRight,
       child: FlatButton(
-          padding: EdgeInsets.zero,
-          onPressed: null,
-          child: const Text('Esqueci minha Senha')),
+        padding: EdgeInsets.zero,
+        onPressed: null,
+        child: const Text('Esqueci minha Senha'),
+      ),
     );
   }
 }
