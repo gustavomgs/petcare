@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mypetcare/helpers/user.dart';
-import 'package:mypetcare/helpers/user-man.dart';
-import 'package:provider/provider.dart';
+import 'package:mypetcare/screens/cadastrar-pet.dart';
+import 'package:mypetcare/screens/login/login_screen.dart';
 
 class MyDrawer extends StatelessWidget {
-  final User user = User();
-  final UserManager userManager = UserManager();
-
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -20,16 +16,21 @@ class MyDrawer extends StatelessWidget {
                   backgroundImage: NetworkImage(
                       'https://media.discordapp.net/attachments/706822572385239072/748730026215604304/logo_petcarepng.png'),
                 ),
-                accountName: Text(user.name ?? 'nome'),
-                accountEmail: Text(user.email ?? 'email')),
+                accountName: Text('Nome Usuario'),
+                accountEmail: Text('usuarioemail.com')),
             ListTile(
               leading: Icon(Icons.home),
               title: Text('Inicio'),
+              onTap: () {
+                Navigator.pop(context);},
             ),
             ListTile(
               leading: Icon(Icons.add),
               title: Text('Cadastrar Pet'),
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(context,MaterialPageRoute(builder: (context) => CadastrarPet()),);
+              },
             ),
             ListTile(
               leading: Icon(Icons.local_hospital),
@@ -53,7 +54,7 @@ class MyDrawer extends StatelessWidget {
               leading: Icon(Icons.exit_to_app),
               title: Text('Sair'),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(context,  MaterialPageRoute(builder: (context) => LoginScreen()),);
               },
             ),
           ],
