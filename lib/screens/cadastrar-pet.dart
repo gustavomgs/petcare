@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mypetcare/screens/cadastro.dart';
 import 'cadastro.dart';
-import 'package:mypetcare/widgets/my-appbar.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart';
+
 
 class CadastrarPet extends StatefulWidget {
   static const String routeName = '/cadastrarpet';
@@ -17,7 +17,7 @@ class _CadastrarPetState extends State<CadastrarPet> {
   final GlobalKey<ScaffoldState> scaffoldkey = GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String dropdownValue;
-
+  
   @override
   void initState() {  
             setState(() {
@@ -44,7 +44,13 @@ class _CadastrarPetState extends State<CadastrarPet> {
                 height:100,
               ),
               TextFormField(
-                decoration: InputDecoration(hintText: 'Nome do Pet'),
+                 decoration: InputDecoration(
+                border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(0.0),
+      ),
+                labelText: 'Nome do pet',
+                hintText: "Ex: Jerry",
+                 ),
                 validator: (name) {
                   if (name.isEmpty)
                     return 'campo obrigatório';
@@ -60,9 +66,9 @@ class _CadastrarPetState extends State<CadastrarPet> {
       value: dropdownValue,
       icon: Icon(Icons.arrow_drop_down),
        style: TextStyle(color: Colors.black),
-      underline: Container(
+      underline: Container(               
         height: 2,
-        color: Colors.deepPurpleAccent,
+        color: Colors.black38,
       ),
       onChanged: (String newValue) {
         setState(() {
@@ -81,9 +87,15 @@ class _CadastrarPetState extends State<CadastrarPet> {
                height: 40,
               ),
                TextFormField(
-                decoration: InputDecoration(hintText: 'Idade do Pet'),
-                validator: (idade) {
-                  MaskTextInputFormatter(mask: '00''Anos');
+                
+                 decoration: InputDecoration(
+                border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(0.0),
+      ),
+                labelText: 'Idade do pet',
+                hintText: "Ex: 2 Anos", 
+                 ),               
+                validator: (idade) {                 
                   if (idade.isEmpty)
                     return 'campo obrigatório';
                   else if (idade.trim().split('').length <= 1)
@@ -94,14 +106,22 @@ class _CadastrarPetState extends State<CadastrarPet> {
                SizedBox(
                height: 40,
               ),
-               TextFormField(
-                decoration: InputDecoration(hintText: 'Peso do Pet'),
+               TextFormField(                
+                
+                decoration: InputDecoration(
+                border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(0.0),
+      ),
+                labelText: 'Peso do pet',
+                hintText: "Ex: 10 Kg",
+    ),
                 validator: (peso) {
                   if (peso.isEmpty)
                     return 'campo obrigatório';
                   else if (peso.trim().split('').length <= 1)
                     return 'Preencha o peso do Pet';
                 },
+                
                 onSaved: (peso) => pets.peso = peso,
               ), SizedBox(
                height: 40,
@@ -115,15 +135,17 @@ class _CadastrarPetState extends State<CadastrarPet> {
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: () {
+                      
                       if (formKey.currentState.validate()) {
                         formKey.currentState.save();
+                        
                       }
                       Navigator.pop(context);
                       Firestore.instance.collection('pets').add({
-                        'Nome do Pet': pets.name,
+                        'Nome do Pet': pets.name.toString() ,
                         'Tipo do pet': dropdownValue,
-                        'Idade do pet': pets.idade,
-                        'Peso do pet': pets.peso
+                        'Idade do pet': pets.idade.toString(),
+                        'Peso do pet': pets.peso.toString(),
                       });
 
                     },
