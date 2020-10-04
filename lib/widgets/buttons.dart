@@ -17,4 +17,20 @@ Widget raised({
   );
 }
 
+Widget raisedbutton({
+  Function ontap,
+}) {
+  return SizedBox(
+    height: 44,
+    child: RaisedButton(
+      onPressed: ontap,
+      child: Text(
+        'Salvar',
+        style: TextStyle(color: Colors.white),
+      ),
+      color: Colors.blue[900],
+    ),
+  );
+}
+
 
