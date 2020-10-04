@@ -21,7 +21,7 @@ class _CadastrarPetState extends State<CadastrarPet> {
   @override
   void initState() {  
             setState(() {
-              dropdownValue = 'One';
+              dropdownValue = 'Selecione o tipo do pet';
             });
       super.initState();
       }
@@ -59,7 +59,7 @@ class _CadastrarPetState extends State<CadastrarPet> {
       DropdownButton<String>(
       value: dropdownValue,
       icon: Icon(Icons.arrow_drop_down),
-       style: TextStyle(color: Colors.deepPurple),
+       style: TextStyle(color: Colors.black),
       underline: Container(
         height: 2,
         color: Colors.deepPurpleAccent,
@@ -69,7 +69,7 @@ class _CadastrarPetState extends State<CadastrarPet> {
           dropdownValue = newValue;
         });
       },
-      items: <String>['One', 'Two', 'Free', 'Four']
+      items: <String>['Selecione o tipo do pet','Cães', 'Felinos', 'Roedores', 'Aves','Repteis']
           .map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
