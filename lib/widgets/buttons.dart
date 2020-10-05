@@ -3,34 +3,40 @@ import 'package:flutter/material.dart';
 
 Widget raised({
   Function ontap,
+  Widget child,
 }) {
   return SizedBox(
     height: 44,
     child: RaisedButton(
+      disabledColor: Colors.blue.withOpacity(0.5),
       onPressed: ontap,
-      child: Text(
-        'Entrar',
-        style: TextStyle(color: Colors.white),
-      ),
+      child: child,
       color: Colors.blue[900],
     ),
   );
 }
 
-Widget raisedbutton({
+Widget myflat({
   Function ontap,
+  String title,
 }) {
-  return SizedBox(
-    height: 44,
-    child: RaisedButton(
+  return FlatButton(
       onPressed: ontap,
       child: Text(
-        'Salvar',
-        style: TextStyle(color: Colors.white),
-      ),
-      color: Colors.blue[900],
+        title,
+        style: TextStyle(
+          color: Colors.blue[900],
+        ),
+      ));
+}
+
+Widget forgotButton() {
+  return Align(
+    alignment: Alignment.centerRight,
+    child: FlatButton(
+      padding: EdgeInsets.zero,
+      onPressed: null,
+      child: const Text('Esqueci minha Senha'),
     ),
   );
 }
-
-

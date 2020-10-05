@@ -78,7 +78,7 @@ class _SingPageState extends State<SingPage> {
                     return 'campo obrigatorio';
                   else if (senha.length < 6) return 'senha muito curta';
                 },
-                onSaved: (senha) => user.passowrd = senha,
+                onSaved: (senha) => user.password = senha,
               ),
               SizedBox(
                 height: 20,
@@ -91,7 +91,7 @@ class _SingPageState extends State<SingPage> {
                     return 'campo obrigatorio';
                   else if (senha.length < 6) return 'senha muito curta';
                 },
-                onSaved: (senha) => user.confirmpassword = senha,
+                onSaved: (senha) => user.confirmPassword = senha,
               ),
               SizedBox(
                 height: 20,
@@ -108,7 +108,7 @@ class _SingPageState extends State<SingPage> {
                       if (formKey.currentState.validate()) {
                         formKey.currentState.save();
 
-                        if (user.passowrd != user.confirmpassword) {
+                        if (user.password != user.confirmPassword) {
                           scaffoldkey.currentState.showSnackBar(
                             SnackBar(
                               content: const Text('As senhas não são iguais'),
@@ -116,17 +116,18 @@ class _SingPageState extends State<SingPage> {
                             ),
                           );
                         }
-                        context.read<UserManager>().singUp(
-                            user: user,
-                            sucesso: () {
-                              _pushPage();
-                            },
-                            onFail: (e) {
-                              scaffoldkey.currentState.showSnackBar(SnackBar(
-                                content: Text('$e'),
-                                backgroundColor: Colors.red,
-                              ));
-                            });
+                        context.read<UserManager>().signUp(
+                              user: user,
+                              onFail: (e) {
+                                scaffoldkey.currentState.showSnackBar(SnackBar(
+                                  content: Text('$e'),
+                                  backgroundColor: Colors.red,
+                                ));
+                              },
+                              sucesso: () {
+                                _pushPage();
+                              },
+                            );
                       }
                     }),
               ),
