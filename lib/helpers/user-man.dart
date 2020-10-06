@@ -19,6 +19,8 @@ class UserManager extends ChangeNotifier {
   bool _loading = false;
   bool get loading => _loading;
 
+  bool get isLoggedIn => user != null;
+
   Future<void> signIn({User user, Function onFail, Function sucesso}) async {
     loading = true;
     try {
@@ -52,8 +54,23 @@ class UserManager extends ChangeNotifier {
     loading = false;
   }
 
+  Future<void> update() async {
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+
+    UserUpdateInfo userUpdateInfo = new UserUpdateInfo();
+    userUpdateInfo.displayName = user.displayName;
+
+    user.updateProfile(userUpdateInfo);
+  }
+
   set loading(bool value) {
     _loading = value;
+    notifyListeners();
+  }
+
+  void singOut() {
+    auth.signOut();
+    user = null;
     notifyListeners();
   }
 

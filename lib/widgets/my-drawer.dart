@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mypetcare/helpers/user-man.dart';
 import 'package:mypetcare/screens/CadastratPet/cadastrar-pet.dart';
+import 'package:mypetcare/screens/User_profile.dart/user_profile.dart';
 import 'package:mypetcare/screens/home.dart';
-import 'package:mypetcare/screens/login/login_screen.dart';
 import 'package:provider/provider.dart';
 
 class Mydrawer extends StatelessWidget {
@@ -14,40 +14,83 @@ class Mydrawer extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              UserAccountsDrawerHeader(
-                accountName: Text(
-                  'Olá, ${userManager.user?.name ?? ''}',
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
+              Container(
+                padding: EdgeInsets.fromLTRB(20, 70, 20, 20),
+                height: 180,
+                width: double.infinity,
+                decoration: BoxDecoration(color: Colors.blue[900]),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    CircleAvatar(
+                      maxRadius: 30,
+                      backgroundImage: userManager.isLoggedIn
+                          ? NetworkImage(
+                              'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80')
+                          : NetworkImage(
+                              'https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=639&q=80'),
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        textAccount(
+                          title:
+                              'Olá, ${userManager.user?.name ?? 'Novo Usuário'}',
+                        ),
+                        textAccount(
+                          title: '${userManager.user?.email ?? ''}',
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        GestureDetector(
+                            onTap: () {
+                              if (userManager.isLoggedIn) {
+                                userManager.singOut();
+                              } else {
+                                Navigator.of(context)
+                                    .popAndPushNamed('/loginPage');
+                              }
+                            },
+                            child: userManager.isLoggedIn
+                                ? Text(
+                                    'Sair',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                : Text(
+                                    'Entre ou cadastre-se',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.white,
+                                    ),
+                                  )),
+                      ],
+                    )
+                  ],
                 ),
-                accountEmail: Text(
-                  '${userManager.user?.email ?? ''}',
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                  style: TextStyle(
-                    fontSize: 14,
-                  ),
-                ),
-
-                //TODO TERMINAR LISTA DE WIDGETS
-                //TODO ROTAS DO DRAWER
               ),
-              ListTile(
-                  leading: Icon(Icons.home),
-                  title: Text('Inicio'),
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => HomeState()),
-                    );
-                  }),
-              ListTile(
-                leading: Icon(Icons.add),
-                title: Text('Cadastrar Pet'),
+              listBuilderTile(
+                title: 'Perfil',
+                icon: Icons.person,
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => UserProfile()),
+                  );
+                },
+              ),
+              listBuilderTile(
+                title: 'Cadastrar Pet',
+                icon: Icons.pets,
                 onTap: () {
                   Navigator.pop(context);
                   Navigator.push(
@@ -56,38 +99,66 @@ class Mydrawer extends StatelessWidget {
                   );
                 },
               ),
-              ListTile(
-                leading: Icon(Icons.local_hospital),
-                title: Text('Medicamentos'),
-                onTap: () {},
+              listBuilderTile(
+                title: 'Medicamentos',
+                icon: Icons.local_hospital,
               ),
-              ListTile(
-                leading: Icon(Icons.today),
-                title: Text('Calendário'),
-                onTap: () {},
+              listBuilderTile(
+                title: 'Calendário',
+                icon: Icons.today,
               ),
-              ListTile(
-                leading: Icon(Icons.tune),
-                title: Text('Calculo de Ração'),
-                onTap: () {},
+              listBuilderTile(
+                title: 'Cálculo ração',
+                icon: Icons.tune,
               ),
-              Divider(
-                thickness: 0.9,
-              ),
-              ListTile(
-                leading: Icon(Icons.exit_to_app),
-                title: Text('Sair'),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()),
-                  );
-                },
+              listBuilderTile(
+                title: 'Sair',
+                icon: Icons.exit_to_app,
+                onTap: () => Navigator.pop(context),
               ),
             ],
           );
         },
       ),
+    );
+  }
+
+  Widget textAccount({
+    String title,
+  }) {
+    return Text(
+      title,
+      overflow: TextOverflow.ellipsis,
+      maxLines: 2,
+      style: TextStyle(
+        fontSize: 16,
+        color: Colors.white,
+        fontWeight: FontWeight.w500,
+      ),
+    );
+  }
+
+  Widget listBuilderTile({
+    IconData icon,
+    String title,
+    Function onTap,
+  }) {
+    return Column(
+      children: [
+        ListTile(
+          leading: Icon(
+            icon,
+            color: Colors.blue[700],
+          ),
+          title: Text(title),
+          onTap: onTap,
+        ),
+        Divider(
+          indent: 20,
+          endIndent: 20,
+          color: Colors.black54,
+        ),
+      ],
     );
   }
 }

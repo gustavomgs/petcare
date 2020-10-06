@@ -20,6 +20,7 @@ Widget myappBar({
   String title,
 }) {
   return AppBar(
+    elevation: 0,
     backgroundColor: colorBar,
     title: Text(title),
     actions: [

@@ -19,13 +19,14 @@ Widget raised({
 Widget myflat({
   Function ontap,
   String title,
+  Color colorText,
 }) {
   return FlatButton(
       onPressed: ontap,
       child: Text(
         title,
         style: TextStyle(
-          color: Colors.blue[900],
+          color: colorText = Colors.blue[900],
         ),
       ));
 }
