@@ -78,7 +78,10 @@ class _SingPageState extends State<SingPage> {
                               valueColor:
                                   AlwaysStoppedAnimation(Colors.blue[900]),
                             )
-                          : Text('Cadastrar', style: TextStyle(color: Colors.white),),
+                          : Text(
+                              'Cadastrar',
+                              style: TextStyle(color: Colors.white),
+                            ),
                       ontap: () {
                         if (formKey.currentState.validate()) {
                           formKey.currentState.save();
@@ -90,19 +93,21 @@ class _SingPageState extends State<SingPage> {
                                 backgroundColor: Colors.redAccent,
                               ),
                             );
+                          } else if (user.password == user.confirmPassword) {
+                            context.read<UserManager>().signUp(
+                                  user: user,
+                                  onFail: (e) {
+                                    scaffoldkey.currentState
+                                        .showSnackBar(SnackBar(
+                                      content: Text('$e'),
+                                      backgroundColor: Colors.red,
+                                    ));
+                                  },
+                                  sucesso: () {
+                                    _pushPage();
+                                  },
+                                );
                           }
-
-                          context.read<UserManager>().signUp(
-                                user: user,
-                                onFail: (e) {
-                                  scaffoldkey.currentState
-                                      .showSnackBar(SnackBar(
-                                    content: Text('$e'),
-                                    backgroundColor: Colors.red,
-                                  ));
-                                },
-                                sucesso: () {_pushPage();},
-                              );
                         }
                       },
                     ),

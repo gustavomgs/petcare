@@ -1,8 +1,6 @@
 import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:mypetcare/data/data_pets.dart';
-import 'package:mypetcare/helpers/pet.dart';
 import 'package:mypetcare/models/pet.dart';
 
 class PetManager with ChangeNotifier {

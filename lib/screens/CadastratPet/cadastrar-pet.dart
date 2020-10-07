@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mypetcare/helpers/pet.dart';
 import 'package:mypetcare/helpers/pet_man.dart';
 import 'package:mypetcare/models/pet.dart';
@@ -57,43 +58,54 @@ class _CadastrarPetState extends State<CadastrarPet> {
                       'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
                   ontap: null // (value) => _formDate['avatarUrl'] = '',
                   ),
-              mytexField(
-                label: 'Nome',
-                initValue: _formDate['name'],
-                onsaved: (value) => _formDate['name'] = value,
-              ),
               Container(
-                height: 60,
-                child: Row(
+                padding: EdgeInsets.all(20),
+                child: Column(
                   children: [
-                    Expanded(
-                      child: Container(
-                        alignment: Alignment.centerRight,
-                        child: Text('Idade do Pet:'),
-                      ),
+                    mytexField(
+                      type: TextInputType.name,
+                      label: 'Nome',
+                      initValue: _formDate['name'],
+                      onsaved: (value) => _formDate['name'] = value,
                     ),
-                    Expanded(
-                      child: Container(
-                        child: mytexField(
-                          label: 'Idade',
-                          initValue: _formDate['idade'],
-                          onsaved: (value) => _formDate['idade'] = value,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        alignment: Alignment.centerLeft,
-                        child: dropDown(),
+                    Container(
+                      height: 60,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              alignment: Alignment.centerLeft,
+                              child: Text('Idade do Pet:'),
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              child: mytexField(
+                                type: TextInputType.number,
+                                initValue: _formDate['idade'],
+                                onsaved: (value) => _formDate['idade'] = value,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              alignment: Alignment.centerLeft,
+                              child: dropDown(),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
               ),
+              SizedBox(
+                height: 90,
+              ),
               saveButton(
                 onTap: () {
                   final isValid = _form.currentState.validate();
-                  ;
+
                   _form.currentState.validate();
 
                   if (isValid) {
@@ -101,7 +113,8 @@ class _CadastrarPetState extends State<CadastrarPet> {
                     Provider.of<PetManager>(context, listen: false).put(
                       PetsData(
                         id: _formDate['id'],
-                        avatarUrl: _formDate['avatarURl'] = '',
+                        avatarUrl: _formDate['avatarURl'] =
+                            'https://images.unsplash.com/photo-1601758064224-c3c5ec910095?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1447&q=80',
                         idade: _formDate['idade'],
                         name: _formDate['name'],
                       ),
@@ -165,21 +178,20 @@ Widget mytexField({
   String label,
   Function onsaved,
   String initValue,
+  TextInputType type,
 }) {
-  return Padding(
-    padding: const EdgeInsets.fromLTRB(32, 8, 16, 8),
-    child: TextFormField(
-      initialValue: initValue,
-      decoration: InputDecoration(
-        labelText: label,
-      ),
-      onSaved: onsaved,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Valor invalido';
-        }
-      },
+  return TextFormField(
+    keyboardType: type,
+    initialValue: initValue,
+    decoration: InputDecoration(
+      labelText: label,
     ),
+    onSaved: onsaved,
+    validator: (value) {
+      if (value == null || value.isEmpty) {
+        return 'Valor invalido';
+      }
+    },
   );
 }
 

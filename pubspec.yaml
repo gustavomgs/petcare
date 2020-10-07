@@ -34,6 +34,7 @@ dependencies:
   provider: ^4.1.2
   splashscreen: ^1.2.0
   progress_indicators: ^0.1.5
+  sqflite: ^1.1.6+1
 
 dev_dependencies:
   flutter_test:

@@ -18,7 +18,6 @@ class _UserProfileState extends State<UserProfile> {
   final User user = User();
 
   Widget build(BuildContext context) {
-    const pets = DATA_PETS;
     return Scaffold(
       appBar: myappBar(
         title: 'Perfil',

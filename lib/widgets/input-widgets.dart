@@ -69,6 +69,7 @@ Widget email({
   Function onsaved,
 }) {
   return TextFormField(
+    keyboardType: TextInputType.emailAddress,
     decoration: InputDecoration(hintText: 'E-mail'),
     obscureText: false,
     validator: (email) {

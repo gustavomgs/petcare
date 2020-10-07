@@ -12,4 +12,20 @@ class PetsData {
     @required this.idade,
     @required this.name,
   });
+
+  factory PetsData.fromMap(Map<String, dynamic> json) => PetsData(
+        id: json["id"],
+        avatarUrl: json["avatarUrl"],
+        idade: json["idade"],
+        name: json["name"],
+      );
+
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> map = {
+      "id": id,
+      "name": name,
+      "idade": idade,
+      "avatarUrl": avatarUrl,
+    };
+  }
 }
