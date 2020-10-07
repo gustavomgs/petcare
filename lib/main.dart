@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:mypetcare/helpers/pet_man.dart';
 import 'package:mypetcare/helpers/user-man.dart';
+import 'package:mypetcare/screens/CadastratPet/cadastrar-pet.dart';
 import 'package:mypetcare/screens/home.dart';
 import 'package:mypetcare/screens/login/login_screen.dart';
 import 'package:mypetcare/screens/singUp/singPage.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 import 'package:provider/provider.dart';
 import 'package:splashscreen/splashscreen.dart';
-
 import 'screens/login/login_screen.dart';
-import 'widgets/my-appbar.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,9 +18,17 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => UserManager(),
-      lazy: false,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => UserManager(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider(
+          create: (_) => PetManager(),
+          lazy: false,
+        ),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'PetCare',
@@ -33,6 +41,7 @@ class MyApp extends StatelessWidget {
           HomeState.routeName: (context) => new HomeState(),
           SingPage.routeName: (context) => new SingPage(),
           LoginScreen.routeName: (context) => new LoginScreen(),
+          CadastrarPet.routeName: (context) => new CadastrarPet(),
         },
         home: _introScreen(),
       ),

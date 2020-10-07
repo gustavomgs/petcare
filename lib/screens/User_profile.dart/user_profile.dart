@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:mypetcare/data/data_pets.dart';
 import 'package:mypetcare/helpers/user-man.dart';
 import 'package:mypetcare/helpers/user.dart';
 import 'package:mypetcare/widgets/buttons.dart';
@@ -15,7 +16,9 @@ class UserProfile extends StatefulWidget {
 
 class _UserProfileState extends State<UserProfile> {
   final User user = User();
+
   Widget build(BuildContext context) {
+    const pets = DATA_PETS;
     return Scaffold(
       appBar: myappBar(
         title: 'Perfil',

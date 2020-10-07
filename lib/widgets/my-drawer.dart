@@ -3,6 +3,7 @@ import 'package:mypetcare/helpers/user-man.dart';
 import 'package:mypetcare/screens/CadastratPet/cadastrar-pet.dart';
 import 'package:mypetcare/screens/User_profile.dart/user_profile.dart';
 import 'package:mypetcare/screens/home.dart';
+import 'package:mypetcare/screens/myPets/my_pets.dart';
 import 'package:provider/provider.dart';
 
 class Mydrawer extends StatelessWidget {
@@ -81,24 +82,37 @@ class Mydrawer extends StatelessWidget {
                 title: 'Perfil',
                 icon: Icons.person,
                 onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => UserProfile()),
-                  );
+                  if (userManager.isLoggedIn) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => UserProfile()),
+                    );
+                  } else {}
                 },
               ),
               listBuilderTile(
                 title: 'Cadastrar Pet',
-                icon: Icons.pets,
+                icon: Icons.add,
                 onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => CadastrarPet()),
-                  );
+                  if (userManager.isLoggedIn) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CadastrarPet()),
+                    );
+                  }
                 },
               ),
+              listBuilderTile(
+                  title: 'Pets Cadastrados',
+                  icon: Icons.pets,
+                  onTap: () {
+                    if (userManager.isLoggedIn) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => MyPets()),
+                      );
+                    } else {}
+                  }),
               listBuilderTile(
                 title: 'Medicamentos',
                 icon: Icons.local_hospital,

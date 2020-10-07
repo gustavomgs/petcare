@@ -1,6 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mypetcare/helpers/pet.dart';
+import 'package:mypetcare/helpers/pet_man.dart';
+import 'package:mypetcare/models/pet.dart';
+import 'package:mypetcare/screens/myPets/my_pets.dart';
+import 'package:mypetcare/widgets/my-appbar.dart';
+import 'package:provider/provider.dart';
 import '../../widgets/buttons.dart';
 import '../../helpers/pet.dart';
 
@@ -12,195 +17,210 @@ class CadastrarPet extends StatefulWidget {
 }
 
 class _CadastrarPetState extends State<CadastrarPet> {
-  final Pets pets = Pets();
-  final GlobalKey<ScaffoldState> scaffoldkey = GlobalKey<ScaffoldState>();
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final _form = GlobalKey<FormState>();
+  final Map<String, String> _formDate = {};
   String dropdownValue;
+  String _mesRef;
 
-  List<PetType> _petTypes = PetType.getPetType();
-  List<DropdownMenuItem<PetType>> _dropdownMenuItems;
-  PetType _selectedPetType;
-
-  List<DropdownMenuItem<PetType>> buildDropdownMenuItems(List petTypes) {
-    List<DropdownMenuItem<PetType>> items = List();
-    for (PetType petType in petTypes) {
-      items.add(
-        DropdownMenuItem(
-          value: petType,
-          child: Text(petType.type),
-        ),
-      );
+  void loadFormPet(PetsData petsData) {
+    if (petsData != null) {
+      _formDate['id'] = petsData.id;
+      _formDate['name'] = petsData.name;
+      _formDate['avatarUrl'] = petsData.avatarUrl;
+      _formDate['idade'] = petsData.idade;
     }
-    return items;
-  }
-
-  onChangedDropdownItem(PetType selectedPetType) {
-    setState(() {
-      _selectedPetType = selectedPetType;
-    });
   }
 
   @override
   void initState() {
-    _dropdownMenuItems = buildDropdownMenuItems(_petTypes);
-
+    setState(() {
+      _mesRef = 'anos';
+    });
     super.initState();
   }
 
   Widget build(BuildContext context) {
+    final PetsData pets = ModalRoute.of(context).settings.arguments;
+
+    loadFormPet(pets);
+
     return Scaffold(
-      key: scaffoldkey,
-      appBar: AppBar(
-          title: Row(
-        children: [
-          Text('Cadastrar Pet'),
-          SizedBox(
-            width: 5,
-          ),
-          Icon(Icons.pets_rounded),
-        ],
-      )),
+      appBar: myappBar(title: ''),
       body: Form(
-        key: formKey,
-        child: Center(
-          child: SingleChildScrollView(
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircleAvatar(
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.photo_camera,
-                        size: 30,
-                      ),
-                      onPressed: null,
-                    ),
-                    maxRadius: 60,
-                    backgroundImage: NetworkImage(
-                        'https://images.unsplash.com/photo-1544568100-847a948585b9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80',
-                        scale: 5),
+        key: _form,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              headerContainer(
+                  image:
+                      'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
+                  ontap: null // (value) => _formDate['avatarUrl'] = '',
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  DropdownButton(
-                    underline: Container(
-                      height: 1,
-                      color: Colors.black26,
-                    ),
-                    value: _selectedPetType,
-                    items: _dropdownMenuItems,
-                    onChanged: onChangedDropdownItem,
-                    hint: Text('Selecione o tipo do pet'),
-                  ),
-                  textFormField(
-                    label: 'Nome do pet',
-                    hint: "Ex: Jerry",
-                    validator: (name) {
-                      if (name.isEmpty)
-                        return 'campo obrigatório';
-                      else if (name.trim().split('').length < 1)
-                        return 'Preencha o nome do Pet';
-                    },
-                    onSaved: (name) => pets.name = name,
-                  ),
-                  textFormField(
-                    label: 'Idade do pet',
-                    hint: "Ex: 2 Anos",
-                    validator: (idade) {
-                      if (idade.isEmpty)
-                        return 'campo obrigatório';
-                      else if (idade.trim().split('').length < 1)
-                        return 'Preencha a idade do Pet';
-                    },
-                    onSaved: (idade) => pets.idade = idade,
-                  ),
-                  textFormField(
-                    label: 'Peso do pet',
-                    hint: "Ex: 10 Kg",
-                    validator: (peso) {
-                      if (peso.isEmpty)
-                        return 'campo obrigatório';
-                      else if (peso.trim().split('').length < 1)
-                        return 'Preencha o peso do Pet';
-                    },
-                    onSaved: (peso) => pets.peso = peso,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  raised(
-                    child: Text(
-                      'Cadastrar',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    ontap: () {
-                      if (formKey.currentState.validate()) {
-                        formKey.currentState.save();
-                        Navigator.pop(context);
-                        Firestore.instance.collection('pets').add({
-                          'Nome do Pet': pets.name.toString(),
-                          'Tipo do pet': _selectedPetType.type,
-                          'Idade do pet': pets.idade.toString(),
-                          'Peso do pet': pets.peso.toString(),
-                        });
-                      }
-                    },
-                  ),
-                  SizedBox(height: 30),
-                  FlatButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                      'Cancelar',
-                      style: TextStyle(color: Colors.blue[900], fontSize: 14),
-                    ),
-                  ),
-                ],
+              mytexField(
+                label: 'Nome',
+                initValue: _formDate['name'],
+                onsaved: (value) => _formDate['name'] = value,
               ),
-            ),
+              Container(
+                height: 60,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.centerRight,
+                        child: Text('Idade do Pet:'),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        child: mytexField(
+                          label: 'Idade',
+                          initValue: _formDate['idade'],
+                          onsaved: (value) => _formDate['idade'] = value,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.centerLeft,
+                        child: dropDown(),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              saveButton(
+                onTap: () {
+                  final isValid = _form.currentState.validate();
+                  ;
+                  _form.currentState.validate();
+
+                  if (isValid) {
+                    _form.currentState.save();
+                    Provider.of<PetManager>(context, listen: false).put(
+                      PetsData(
+                        id: _formDate['id'],
+                        avatarUrl: _formDate['avatarURl'] = '',
+                        idade: _formDate['idade'],
+                        name: _formDate['name'],
+                      ),
+                    );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MyPets()),
+                    );
+                  }
+                },
+              ),
+            ],
           ),
         ),
       ),
     );
   }
 
-  Widget textFormField({
-    String label,
-    String hint,
-    Function validator,
-    Function onSaved,
-  }) {
-    return TextFormField(
-      decoration: InputDecoration(
-        hintStyle: TextStyle(fontSize: 15),
-        labelStyle: TextStyle(fontSize: 15),
-        labelText: label,
-        hintText: hint,
+  Widget dropDown() {
+    return DropdownButton<String>(
+      value: _mesRef,
+      iconSize: 24,
+      elevation: 16,
+      underline: Container(
+        color: Colors.white,
+        height: 1,
       ),
-      validator: validator,
-      onSaved: onSaved,
+      style: TextStyle(
+        color: Colors.blue[700],
+        fontSize: 14,
+      ),
+      onChanged: (String newValue) {
+        setState(() {
+          _mesRef = newValue;
+        });
+      },
+      items: <String>[
+        'meses',
+        'anos',
+      ].map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
     );
   }
 }
 
-class PetType {
-  int id;
-  String type;
+Widget saveButton({
+  Function onTap,
+}) {
+  return TextButton.icon(
+    onPressed: onTap,
+    icon: Icon(Icons.save),
+    label: Text('Salvar'),
+  );
+}
 
-  PetType(this.id, this.type);
-  static List<PetType> getPetType() {
-    return <PetType>[
-      PetType(1, "Cachorro"),
-      PetType(2, "Gato"),
-      PetType(3, "Ave"),
-      PetType(4, "Reptile"),
-      PetType(5, "Roedor"),
-      PetType(6, "Peixe"),
-    ];
-  }
+Widget mytexField({
+  String label,
+  Function onsaved,
+  String initValue,
+}) {
+  return Padding(
+    padding: const EdgeInsets.fromLTRB(32, 8, 16, 8),
+    child: TextFormField(
+      initialValue: initValue,
+      decoration: InputDecoration(
+        labelText: label,
+      ),
+      onSaved: onsaved,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Valor invalido';
+        }
+      },
+    ),
+  );
+}
+
+Widget headerContainer({
+  String image,
+  Function ontap,
+}) {
+  return Column(
+    children: [
+      Container(
+        height: 200,
+        child: Stack(
+          children: [
+            Container(
+              height: 120,
+              decoration: BoxDecoration(
+                color: Colors.blue[900],
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.elliptical(60, 20),
+                  // bottomRight: Radius.elliptical(60, 20),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: CircleAvatar(
+                child: GestureDetector(
+                  child: Icon(
+                    Icons.photo_camera,
+                    size: 70,
+                    color: Colors.white.withOpacity(0.5),
+                  ),
+                  onTap: ontap,
+                ),
+                backgroundImage: NetworkImage(image),
+                maxRadius: 90,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ],
+  );
 }
