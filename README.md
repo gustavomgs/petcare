@@ -5,11 +5,11 @@ Profº Kléber Andrade</h2>
  
 Alunos:
 
-Gustavo Messias
-Flávio Junior
-Agner Ribeiro
-Matheus Estoque
-Douglas Ortiz
+Gustavo Messias<br>
+Flávio Junior<br>
+Agner Ribeiro<br>
+Matheus Estoque<br>
+Douglas Ortiz<br>
  <hr>
 <h1 align="center"> PetCare </h1>
          <h1 align="center"><img src="https://img.shields.io/static/v1?label=flutter&message=mobile&color=blue&style=for-the-badge&logo=FLUTTER"/> | <img src="https://img.shields.io/static/v1?label=php&message=web&color=blue&style=for-the-badge&logo=PHP"/></h1>
