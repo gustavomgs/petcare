@@ -50,55 +50,58 @@ class MyApp extends StatelessWidget {
 }
 
 Widget _introScreen() {
-  return Stack(
-    children: <Widget>[
-      SplashScreen(
-        seconds: 7,
-        backgroundColor: Colors.white,
-        navigateAfterSeconds: LoginScreen(),
-        loaderColor: Colors.transparent,
-      ),
-      Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/logo.png',
-              scale: 3,
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            CollectionSlideTransition(
-              children: <Widget>[
-                Icon(
-                  Icons.pets_outlined,
-                  color: Colors.blue[900],
-                ),
-                Icon(
-                  Icons.pets_outlined,
-                  color: Colors.blue[900],
-                ),
-                Icon(
-                  Icons.pets_outlined,
-                  color: Colors.blue[900],
-                ),
-                Icon(
-                  Icons.pets_outlined,
-                  color: Colors.blue[900],
-                ),
-                Icon(
-                  Icons.pets_outlined,
-                  color: Colors.blue[900],
-                ),
-              ],
-            ),
-          ],
+  return Consumer<UserManager>(builder: (context, userManager, child) {
+    return Stack(
+      children: <Widget>[
+        SplashScreen(
+          seconds: 7,
+          backgroundColor: Colors.white,
+          navigateAfterSeconds:
+              userManager.loading ? LoginScreen() : HomeState(),
+          loaderColor: Colors.transparent,
         ),
-      )
-    ],
-  );
+        Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/logo.png',
+                scale: 3,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              CollectionSlideTransition(
+                children: <Widget>[
+                  Icon(
+                    Icons.pets_outlined,
+                    color: Colors.blue[900],
+                  ),
+                  Icon(
+                    Icons.pets_outlined,
+                    color: Colors.blue[900],
+                  ),
+                  Icon(
+                    Icons.pets_outlined,
+                    color: Colors.blue[900],
+                  ),
+                  Icon(
+                    Icons.pets_outlined,
+                    color: Colors.blue[900],
+                  ),
+                  Icon(
+                    Icons.pets_outlined,
+                    color: Colors.blue[900],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        )
+      ],
+    );
+  });
 }
 
 //TODO FAZER A PAGINA DE CADASTRO
