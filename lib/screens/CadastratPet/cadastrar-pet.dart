@@ -1,6 +1,8 @@
+import 'package:age/age.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:mypetcare/helpers/pet.dart';
 import 'package:mypetcare/helpers/pet_man.dart';
 import 'package:mypetcare/models/pet.dart';
@@ -22,6 +24,11 @@ class _CadastrarPetState extends State<CadastrarPet> {
   final Map<String, String> _formDate = {};
   String dropdownValue;
   String _mesRef;
+
+  DateTime today = DateTime.now();
+  String bday2 = "";
+  DateTime birthday = DateTime.now();
+  AgeDuration age;
 
   void loadFormPet(PetsData petsData) {
     if (petsData != null) {
@@ -72,27 +79,21 @@ class _CadastrarPetState extends State<CadastrarPet> {
                       height: 60,
                       child: Row(
                         children: [
-                          Expanded(
-                            child: Container(
-                              alignment: Alignment.centerLeft,
-                              child: Text('Idade do Pet:'),
-                            ),
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text('Data de Nascimento:'),
                           ),
                           Expanded(
-                            child: Container(
-                              child: mytexField(
-                                type: TextInputType.number,
-                                initValue: _formDate['idade'],
-                                onsaved: (value) => _formDate['idade'] = value,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Container(
-                              alignment: Alignment.centerLeft,
-                              child: dropDown(),
-                            ),
-                          ),
+                              child: Text(
+                            bday2,
+                            textAlign: TextAlign.center,
+                          )),
+                          IconButton(
+                              icon: Icon(Icons.date_range),
+                              color: Colors.blue,
+                              onPressed: () {
+                                datePicker();
+                              }),
                         ],
                       ),
                     ),
@@ -131,6 +132,31 @@ class _CadastrarPetState extends State<CadastrarPet> {
         ),
       ),
     );
+  }
+
+  Future datePicker() async {
+    final date = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now(),
+      locale: Locale("pt", "BR"),
+    );
+
+    setState(() {
+      if (date != null) {
+        birthday = date;
+
+        final bday = DateFormat("dd/MM/yyyy").format(date);
+
+        bday2 = bday;
+        age = Age.dateDifference(
+            fromDate: birthday, toDate: today, includeToDate: false);
+
+        print(
+            "${age.years} ano(s), ${age.months} mês(es) e ${age.days} dia(s)");
+      }
+    });
   }
 
   Widget dropDown() {

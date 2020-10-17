@@ -10,6 +10,8 @@ import 'package:provider/provider.dart';
 import 'package:splashscreen/splashscreen.dart';
 import 'screens/login/login_screen.dart';
 
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -30,6 +32,13 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        localizationsDelegates: [
+          GlobalWidgetsLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+        ],
+        supportedLocales: [
+          Locale("pt", "BR"),
+        ],
         debugShowCheckedModeBanner: false,
         title: 'PetCare',
         theme: ThemeData(
