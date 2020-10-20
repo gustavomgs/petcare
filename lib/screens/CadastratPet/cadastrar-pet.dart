@@ -11,6 +11,8 @@ import 'package:mypetcare/widgets/my-appbar.dart';
 import 'package:provider/provider.dart';
 import '../../widgets/buttons.dart';
 import '../../helpers/pet.dart';
+import 'package:mypetcare/helpers/pet_manager_test.dart';
+import 'dart:math';
 
 class CadastrarPet extends StatefulWidget {
   static const String routeName = '/cadastrarpet';
@@ -29,6 +31,12 @@ class _CadastrarPetState extends State<CadastrarPet> {
   String bday2 = "";
   DateTime birthday = DateTime.now();
   AgeDuration age;
+
+  SavePet _pet = SavePet();
+
+  final String uid = SavePet().uid;
+
+  final db = Firestore.instance;
 
   void loadFormPet(PetsData petsData) {
     if (petsData != null) {
@@ -105,6 +113,7 @@ class _CadastrarPetState extends State<CadastrarPet> {
               ),
               saveButton(
                 onTap: () {
+                  print(uid);
                   final isValid = _form.currentState.validate();
 
                   _form.currentState.validate();
@@ -120,6 +129,26 @@ class _CadastrarPetState extends State<CadastrarPet> {
                         name: _formDate['name'],
                       ),
                     );
+
+                    final String id = Random().nextInt(382643287).toString();
+
+                    db
+                        .collection("users")
+                        .document(uid)
+                        .collection("pets")
+                        .add({
+                      "id": id,
+                      "name": _formDate["name"],
+                      "age":
+                          "${age.years} ano(s), ${age.months} mês(es) e ${age.days} dia(s)",
+                    });
+
+                    SavePet(
+                        id: id,
+                        age:
+                            "${age.years} ano(s), ${age.months} mês(es) e ${age.days} dia(s)",
+                        name: _formDate["name"]);
+
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => MyPets()),
