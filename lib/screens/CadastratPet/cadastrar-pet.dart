@@ -120,7 +120,7 @@ class _CadastrarPetState extends State<CadastrarPet> {
 
                   if (isValid) {
                     _form.currentState.save();
-                    Provider.of<PetManager>(context, listen: false).put(
+                    /* Provider.of<PetManager>(context, listen: false).put(
                       PetsData(
                         id: _formDate['id'],
                         avatarUrl: _formDate['avatarURl'] =
@@ -128,7 +128,7 @@ class _CadastrarPetState extends State<CadastrarPet> {
                         idade: _formDate['idade'],
                         name: _formDate['name'],
                       ),
-                    );
+                    ); */
 
                     final String id = Random().nextInt(382643287).toString();
 
@@ -139,15 +139,10 @@ class _CadastrarPetState extends State<CadastrarPet> {
                         .add({
                       "id": id,
                       "name": _formDate["name"],
-                      "age":
-                          "${age.years} ano(s), ${age.months} mês(es) e ${age.days} dia(s)",
+                      "age": bday2,
                     });
 
-                    SavePet(
-                        id: id,
-                        age:
-                            "${age.years} ano(s), ${age.months} mês(es) e ${age.days} dia(s)",
-                        name: _formDate["name"]);
+                    //SavePet(id: id, age: bday2, name: _formDate["name"]);
 
                     Navigator.push(
                       context,

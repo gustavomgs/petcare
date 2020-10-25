@@ -14,18 +14,12 @@ class SavePet {
 
   final String uid = _userManager.user.id.toString();
 
-  DocumentReference get firestoreRef =>
-      Firestore.instance.document('users/$uid/pets/$id');
-
-  Future<void> savePets() async {
-    await firestoreRef.setData(toMap());
-  }
-
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'name': name,
-      'age': age,
-    };
+  factory SavePet.fromFireStore(DocumentSnapshot doc) {
+    Map data = doc.data;
+    return SavePet(
+      id: data['id'],
+      age: data['age'],
+      name: data['name'],
+    );
   }
 }
