@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:mypetcare/helpers/errors.dart';
-import 'package:mypetcare/helpers/user.dart';
+import 'package:mypetcare/usuario/helpers/user.dart';
 
 class UserManager extends ChangeNotifier {
   UserManager() {

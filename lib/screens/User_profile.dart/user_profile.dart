@@ -1,11 +1,11 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:mypetcare/data/data_pets.dart';
-import 'package:mypetcare/helpers/user-man.dart';
-import 'package:mypetcare/helpers/user.dart';
+
+import 'package:mypetcare/usuario/helpers/user-man.dart';
+import 'package:mypetcare/usuario/helpers/user.dart';
 import 'package:mypetcare/widgets/buttons.dart';
-import 'package:mypetcare/widgets/input-widgets.dart';
+
 import 'package:mypetcare/widgets/my-appbar.dart';
 import 'package:provider/provider.dart';
 

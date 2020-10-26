@@ -3,15 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:mypetcare/helpers/pet.dart';
-import 'package:mypetcare/helpers/pet_man.dart';
-import 'package:mypetcare/models/pet.dart';
+
 import 'package:mypetcare/screens/myPets/my_pets.dart';
 import 'package:mypetcare/widgets/my-appbar.dart';
-import 'package:provider/provider.dart';
-import '../../widgets/buttons.dart';
-import '../../helpers/pet.dart';
-import 'package:mypetcare/helpers/pet_manager_test.dart';
+
 import 'dart:math';
 
 class CadastrarPet extends StatefulWidget {
@@ -32,20 +27,7 @@ class _CadastrarPetState extends State<CadastrarPet> {
   DateTime birthday = DateTime.now();
   AgeDuration age;
 
-  SavePet _pet = SavePet();
-
-  final String uid = SavePet().uid;
-
   final db = Firestore.instance;
-
-  void loadFormPet(PetsData petsData) {
-    if (petsData != null) {
-      _formDate['id'] = petsData.id;
-      _formDate['name'] = petsData.name;
-      _formDate['avatarUrl'] = petsData.avatarUrl;
-      _formDate['idade'] = petsData.idade;
-    }
-  }
 
   @override
   void initState() {
@@ -56,10 +38,6 @@ class _CadastrarPetState extends State<CadastrarPet> {
   }
 
   Widget build(BuildContext context) {
-    final PetsData pets = ModalRoute.of(context).settings.arguments;
-
-    loadFormPet(pets);
-
     return Scaffold(
       appBar: myappBar(title: ''),
       body: Form(
@@ -113,7 +91,6 @@ class _CadastrarPetState extends State<CadastrarPet> {
               ),
               saveButton(
                 onTap: () {
-                  print(uid);
                   final isValid = _form.currentState.validate();
 
                   _form.currentState.validate();
@@ -132,11 +109,7 @@ class _CadastrarPetState extends State<CadastrarPet> {
 
                     final String id = Random().nextInt(382643287).toString();
 
-                    db
-                        .collection("users")
-                        .document(uid)
-                        .collection("pets")
-                        .add({
+                    db.collection("users").document(id).collection("pets").add({
                       "id": id,
                       "name": _formDate["name"],
                       "age": bday2,

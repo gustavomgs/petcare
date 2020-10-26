@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mypetcare/helpers/pet_man.dart';
-import 'package:mypetcare/helpers/user-man.dart';
+import 'package:mypetcare/pet/manager/pet_manager.dart';
+import 'package:mypetcare/usuario/helpers/user-man.dart';
 import 'package:mypetcare/screens/CadastratPet/cadastrar-pet.dart';
 import 'package:mypetcare/screens/home.dart';
 import 'package:mypetcare/screens/login/login_screen.dart';

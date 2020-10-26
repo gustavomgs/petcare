@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mypetcare/helpers/user-man.dart';
-import 'package:mypetcare/helpers/user.dart';
+import 'package:mypetcare/usuario/helpers/user-man.dart';
+import 'package:mypetcare/usuario/helpers/user.dart';
 import 'package:mypetcare/screens/login/login_screen.dart';
 import 'package:mypetcare/widgets/buttons.dart';
 import 'package:mypetcare/widgets/input-widgets.dart';
