@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:mypetcare/pet/models/pets.dart';
+import 'package:petcare/pet/models/pets.dart';
 
 class PetManager extends ChangeNotifier {
   PetManager() {

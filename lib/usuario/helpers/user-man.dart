@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:mypetcare/helpers/errors.dart';
-import 'package:mypetcare/usuario/helpers/user.dart';
+import 'package:petcare/helpers/errors.dart';
+import 'package:petcare/usuario/helpers/user.dart';
 
 class UserManager extends ChangeNotifier {
   UserManager() {

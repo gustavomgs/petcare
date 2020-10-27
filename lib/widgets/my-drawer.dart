@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mypetcare/usuario/helpers/user-man.dart';
-import 'package:mypetcare/screens/CadastratPet/cadastrar-pet.dart';
-import 'package:mypetcare/screens/User_profile.dart/user_profile.dart';
-import 'package:mypetcare/screens/myPets/my_pets.dart';
+import 'package:petcare/usuario/helpers/user-man.dart';
+import 'package:petcare/screens/CadastratPet/cadastrar-pet.dart';
+import 'package:petcare/screens/User_profile.dart/user_profile.dart';
+import 'package:petcare/screens/myPets/my_pets.dart';
 import 'package:provider/provider.dart';
 
 class Mydrawer extends StatelessWidget {

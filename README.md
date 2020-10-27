@@ -1,21 +1,16 @@
-<h2 align="center">FATEC - Faculdade de Tecnologia de Americana<br>
-Laboratório de Engenharia de Software<br>
-Profº Kléber Andrade</h2>
- <h4>
- 
-Alunos:
+# petcare
 
-Gustavo Messias<br>
-Flávio Junior<br>
-Agner Ribeiro<br>
-Matheus Estoque<br>
-Douglas Ortiz<br>
- <hr>
-<h1 align="center"> PetCare </h1>
-         <h1 align="center"><img src="https://img.shields.io/static/v1?label=flutter&message=mobile&color=blue&style=for-the-badge&logo=FLUTTER"/> | <img src="https://img.shields.io/static/v1?label=php&message=web&color=blue&style=for-the-badge&logo=PHP"/></h1>
+A new Flutter application.
 
-<p align="justify"> Aplicativo para cuidados diários e prolongados de animais domésticos. </p>
+## Getting Started
 
-<h1 align="center">
-<img  width="250" src="http://gensoft.site/img/fundogit.fw.png">
-</h1>
+This project is a starting point for a Flutter application.
+
+A few resources to get you started if this is your first Flutter project:
+
+- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+
+For help getting started with Flutter, view our
+[online documentation](https://flutter.dev/docs), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.

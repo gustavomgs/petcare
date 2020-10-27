@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:mypetcare/pet/components/card_pet.dart';
-import 'package:mypetcare/pet/manager/pet_manager.dart';
-import 'package:mypetcare/widgets/my-appbar.dart';
-import 'package:progress_indicators/progress_indicators.dart';
+import 'package:petcare/pet/components/card_pet.dart';
+import 'package:petcare/pet/manager/pet_manager.dart';
+import 'package:petcare/widgets/my-appbar.dart';
 import 'package:provider/provider.dart';
 
 class MyPets extends StatefulWidget {
@@ -23,16 +22,12 @@ class _MyPetsState extends State<MyPets> {
       body: Consumer<PetManager>(
         builder: (context, petManager, child) {
           return Container(
-            child: petManager.allPets.length == 0
-                ? Center(
-                    child: Text('Não existem pets aqui'),
-                  )
-                : ListView.builder(
-                    itemCount: petManager.allPets.length,
-                    itemBuilder: (_, index) {
-                      return CardPet(petManager.allPets[index]);
-                    },
-                  ),
+            child: ListView.builder(
+              itemCount: petManager.allPets.length,
+              itemBuilder: (_, index) {
+                return CardPet(petManager.allPets[index]);
+              },
+            ),
           );
         },
       ),

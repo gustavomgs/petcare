@@ -1,12 +1,11 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
-
-import 'package:mypetcare/usuario/helpers/user-man.dart';
-import 'package:mypetcare/usuario/helpers/user.dart';
-import 'package:mypetcare/widgets/buttons.dart';
-
-import 'package:mypetcare/widgets/my-appbar.dart';
+import 'package:petcare/pet/components/card_pet.dart';
+import 'package:petcare/pet/manager/pet_manager.dart';
+import 'package:petcare/usuario/helpers/user-man.dart';
+import 'package:petcare/usuario/helpers/user.dart';
+import 'package:petcare/widgets/buttons.dart';
+import 'package:petcare/widgets/my-appbar.dart';
 import 'package:provider/provider.dart';
 
 class UserProfile extends StatefulWidget {
@@ -16,6 +15,7 @@ class UserProfile extends StatefulWidget {
 
 class _UserProfileState extends State<UserProfile> {
   final User user = User();
+  final PetManager pets = PetManager();
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,7 +77,6 @@ class _UserProfileState extends State<UserProfile> {
                         ],
                       ),
                       Divider(),
-                      myPets(),
                     ],
                   ),
                 ),
@@ -152,64 +151,27 @@ class _UserProfileState extends State<UserProfile> {
     );
   }
 
-  //TODO FAZER UM LIST BUILDER COM ADD
   Widget myPets({String title, String desc}) {
     return Container(
-      height: 200,
-      child: ListView(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        scrollDirection: Axis.horizontal,
-        children: [
-          petPhoto(),
-          SizedBox(
-            width: 10,
-          ),
-          petPhoto(),
-          SizedBox(
-            width: 10,
-          ),
-          petPhoto(),
-          SizedBox(
-            width: 10,
-          ),
-          petPhoto(),
-          SizedBox(
-            width: 10,
-          ),
-          petPhoto(),
-          SizedBox(
-            width: 10,
-          ),
-          petPhoto(),
-          SizedBox(
-            width: 10,
-          ),
-          petPhoto(),
-          SizedBox(
-            width: 10,
-          ),
-          petPhoto(),
-          SizedBox(
-            width: 10,
-          ),
-          petPhoto(),
-          SizedBox(
-            width: 10,
-          ),
-          petPhoto(),
-          SizedBox(
-            width: 10,
-          ),
-          petPhoto(),
-          SizedBox(
-            width: 10,
-          ),
-          petPhoto(),
-          SizedBox(
-            width: 10,
-          ),
-          petPhoto(),
-        ],
+      height: 250,
+      child: ListView.builder(
+        itemCount: pets.allPets.length,
+        itemBuilder: (context, index) {
+          return Consumer<PetManager>(
+            builder: (context, petManager, child) {
+              return Container(
+                child: petManager.allPets.length == 0
+                    ? Text('Não existem pets aqui')
+                    : ListView.builder(
+                        itemCount: petManager.allPets.length,
+                        itemBuilder: (_, index) {
+                          return CardPet(petManager.allPets[index]);
+                        },
+                      ),
+              );
+            },
+          );
+        },
       ),
     );
   }

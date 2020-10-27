@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mypetcare/pet/manager/pet_manager.dart';
-import 'package:mypetcare/usuario/helpers/user-man.dart';
-import 'package:mypetcare/screens/CadastratPet/cadastrar-pet.dart';
-import 'package:mypetcare/screens/home.dart';
-import 'package:mypetcare/screens/login/login_screen.dart';
-import 'package:mypetcare/screens/singUp/singPage.dart';
+import 'package:petcare/pet/petscreen/pet_screen.dart';
+import 'package:petcare/pet/models/pets.dart';
+import 'package:petcare/pet/manager/pet_manager.dart';
+import 'package:petcare/usuario/helpers/user-man.dart';
+import 'package:petcare/screens/home.dart';
+import 'package:petcare/screens/login/login_screen.dart';
+import 'package:petcare/screens/singUp/singPage.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 import 'package:provider/provider.dart';
 import 'package:splashscreen/splashscreen.dart';
@@ -17,6 +18,10 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  final Pets pets;
+
+  const MyApp({Key key, this.pets}) : super(key: key);
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -50,7 +55,13 @@ class MyApp extends StatelessWidget {
           HomeState.routeName: (context) => new HomeState(),
           SingPage.routeName: (context) => new SingPage(),
           LoginScreen.routeName: (context) => new LoginScreen(),
-          CadastrarPet.routeName: (context) => new CadastrarPet(),
+        },
+        onGenerateRoute: (settings) {
+          switch (settings.name) {
+            case '/petscreen':
+              return MaterialPageRoute(
+                  builder: (_) => PetScreen(settings.arguments as Pets));
+          }
         },
         home: _introScreen(),
       ),

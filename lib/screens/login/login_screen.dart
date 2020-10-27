@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mypetcare/usuario/helpers/user-man.dart';
-import 'package:mypetcare/usuario/helpers/user.dart';
-import 'package:mypetcare/screens/home.dart';
-import 'package:mypetcare/widgets/buttons.dart';
-import 'package:mypetcare/widgets/input-widgets.dart';
-import 'package:mypetcare/widgets/my-appbar.dart';
+import 'package:petcare/usuario/helpers/user-man.dart';
+import 'package:petcare/usuario/helpers/user.dart';
+import 'package:petcare/screens/home.dart';
+import 'package:petcare/widgets/buttons.dart';
+import 'package:petcare/widgets/input-widgets.dart';
+import 'package:petcare/widgets/my-appbar.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {

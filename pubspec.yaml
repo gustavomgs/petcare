@@ -1,4 +1,4 @@
-name: mypetcare
+name: petcare
 description: A new Flutter application.
 
 # The following line prevents the package from being accidentally published to
@@ -39,6 +39,7 @@ dependencies:
   sqflite: ^1.1.6+1
   age: ^0.0.1
   intl: ^0.16.1
+  carousel_pro: ^1.0.0
 
 dev_dependencies:
   flutter_test:

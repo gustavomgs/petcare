@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
-import 'package:mypetcare/screens/myPets/my_pets.dart';
-import 'package:mypetcare/widgets/my-appbar.dart';
+import 'package:petcare/screens/myPets/my_pets.dart';
+import 'package:petcare/widgets/my-appbar.dart';
 
 import 'dart:math';
 
