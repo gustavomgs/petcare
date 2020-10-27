@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petcare/pet/editpet/edit_petscreen.dart';
 import 'package:petcare/pet/petscreen/pet_screen.dart';
 import 'package:petcare/pet/models/pets.dart';
 import 'package:petcare/pet/manager/pet_manager.dart';
@@ -60,7 +61,16 @@ class MyApp extends StatelessWidget {
           switch (settings.name) {
             case '/petscreen':
               return MaterialPageRoute(
-                  builder: (_) => PetScreen(settings.arguments as Pets));
+                builder: (_) => PetScreen(
+                  settings.arguments as Pets,
+                ),
+              );
+            case '/editpetscreen':
+              return MaterialPageRoute(
+                builder: (_) => EditPetScreen(
+                  settings.arguments as Pets,
+                ),
+              );
           }
         },
         home: _introScreen(),
@@ -77,7 +87,7 @@ Widget _introScreen() {
           seconds: 7,
           backgroundColor: Colors.white,
           navigateAfterSeconds:
-              userManager.loading ? LoginScreen() : HomeState(),
+              userManager.isLoggedIn ? HomeState() : LoginScreen(),
           loaderColor: Colors.transparent,
         ),
         Center(

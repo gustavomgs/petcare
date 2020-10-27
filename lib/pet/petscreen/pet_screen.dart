@@ -1,7 +1,6 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:petcare/pet/models/pets.dart';
-import 'package:petcare/widgets/my-appbar.dart';
 
 class PetScreen extends StatelessWidget {
   const PetScreen(this.pets);
@@ -10,7 +9,18 @@ class PetScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: myappBar(title: '${pets.name}'),
+      appBar: AppBar(
+        title: Text('${pets.name}'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: () {
+              Navigator.of(context)
+                  .pushReplacementNamed('/editpetscreen', arguments: pets);
+            },
+          ),
+        ],
+      ),
       body: ListView(
         children: [
           AspectRatio(
