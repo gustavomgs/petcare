@@ -47,7 +47,7 @@ class PetScreen extends StatelessWidget {
                   endIndent: 20,
                   indent: 20,
                 ),
-                Text('${pets.name} tem ${pets.idade} anos de idade '),
+                Text('${pets.name} tem ${pets.idade} anos de idade'),
                 ListTile(
                   leading: Icon(
                     Icons.pets,

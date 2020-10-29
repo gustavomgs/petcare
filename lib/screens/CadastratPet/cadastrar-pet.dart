@@ -1,12 +1,14 @@
 import 'package:age/age.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-
+import 'package:petcare/pet/manager/pet_manager.dart';
+import 'package:petcare/usuario/helpers/user-man.dart';
 import 'package:petcare/screens/myPets/my_pets.dart';
+import 'package:petcare/usuario/helpers/user.dart';
 import 'package:petcare/widgets/my-appbar.dart';
-
 import 'dart:math';
 
 class CadastrarPet extends StatefulWidget {
@@ -27,14 +29,41 @@ class _CadastrarPetState extends State<CadastrarPet> {
   DateTime birthday = DateTime.now();
   AgeDuration age;
 
+  String userId;
+
   final db = Firestore.instance;
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
+  List<PetType> _petTypes = PetType.getPetType();
+  List<DropdownMenuItem<PetType>> _dropdownMenuItems;
+  PetType _selectedPetType;
 
   @override
   void initState() {
+    _dropdownMenuItems = buildDropdownMenuItems(_petTypes);
     setState(() {
       _mesRef = 'anos';
     });
     super.initState();
+  }
+
+  List<DropdownMenuItem<PetType>> buildDropdownMenuItems(List petTypes) {
+    List<DropdownMenuItem<PetType>> items = List();
+    for (PetType petType in petTypes) {
+      items.add(
+        DropdownMenuItem(
+          value: petType,
+          child: Text(petType.type),
+        ),
+      );
+    }
+    return items;
+  }
+
+  onChangedDropdownItem(PetType selectedPetType) {
+    setState(() {
+      _selectedPetType = selectedPetType;
+    });
   }
 
   Widget build(BuildContext context) {
@@ -83,6 +112,12 @@ class _CadastrarPetState extends State<CadastrarPet> {
                         ],
                       ),
                     ),
+                    DropdownButton(
+                      value: _selectedPetType,
+                      items: _dropdownMenuItems,
+                      onChanged: onChangedDropdownItem,
+                      hint: Text('Selecione o tipo do pet'),
+                    ),
                   ],
                 ),
               ),
@@ -107,15 +142,11 @@ class _CadastrarPetState extends State<CadastrarPet> {
                       ),
                     ); */
 
-                    final String id = Random().nextInt(382643287).toString();
-
-                    db.collection("users").document(id).collection("pets").add({
-                      "id": id,
-                      "name": _formDate["name"],
-                      "age": bday2,
-                    });
-
-                    //SavePet(id: id, age: bday2, name: _formDate["name"]);
+                    savePet(
+                      _formDate["name"],
+                      bday2,
+                      _selectedPetType.type,
+                    );
 
                     Navigator.push(
                       context,
@@ -129,6 +160,24 @@ class _CadastrarPetState extends State<CadastrarPet> {
         ),
       ),
     );
+  }
+
+  void savePet(String name, age, type) async {
+    final FirebaseUser user = await auth.currentUser();
+    final String userID = user.uid;
+
+    userId = userID;
+
+    final String id = Random().nextInt(382643287).toString();
+
+    print(userID);
+
+    db.collection("users").document(userID).collection("pets").add({
+      "id": id,
+      "name": name,
+      "age": age,
+      "type": type,
+    });
   }
 
   Future datePicker() async {
@@ -258,4 +307,22 @@ Widget headerContainer({
       ),
     ],
   );
+}
+
+class PetType {
+  int id;
+  String type;
+
+  PetType(this.id, this.type);
+
+  static List<PetType> getPetType() {
+    return <PetType>[
+      PetType(1, "Cão"),
+      PetType(2, "Felino"),
+      PetType(3, "Ave"),
+      PetType(4, "Reptile"),
+      PetType(5, "Roedor"),
+      PetType(6, "Peixe"),
+    ];
+  }
 }

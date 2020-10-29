@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:petcare/helpers/errors.dart';
 import 'package:petcare/usuario/helpers/user.dart';
 
+String uid;
+
 class UserManager extends ChangeNotifier {
   UserManager() {
     _loadCurrentUser();
