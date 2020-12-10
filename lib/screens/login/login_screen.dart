@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:petcare/helpers/getUID.dart';
 import 'package:petcare/usuario/helpers/user-man.dart';
 import 'package:petcare/usuario/helpers/user.dart';
 import 'package:petcare/screens/home.dart';
@@ -18,6 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<ScaffoldState> scaffoldkey = GlobalKey<ScaffoldState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passcontroller = TextEditingController();
+  GetUID getUID;
 
   @override
   void initState() {
@@ -92,8 +95,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                         backgroundColor: Colors.red,
                                       ));
                                     },
-                                    sucesso: () {
+                                    sucesso: () async {
                                       _pushPage();
+                                      getUID.userId();
+                                      print(getUID.uid);
                                     });
                               }
                             }),

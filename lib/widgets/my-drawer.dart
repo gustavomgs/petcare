@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petcare/screens/calculadora/feed_calculator.dart';
 import 'package:petcare/usuario/helpers/user-man.dart';
 import 'package:petcare/screens/CadastratPet/cadastrar-pet.dart';
 import 'package:petcare/screens/User_profile.dart/user_profile.dart';
@@ -121,9 +122,17 @@ class Mydrawer extends StatelessWidget {
                 icon: Icons.today,
               ),
               listBuilderTile(
-                title: 'Cálculo ração',
-                icon: Icons.tune,
-              ),
+                  title: 'Cálculo ração',
+                  icon: Icons.tune,
+                  onTap: () {
+                    if (userManager.isLoggedIn) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => FeedCalculator()),
+                      );
+                    } else {}
+                  }),
               listBuilderTile(
                 title: 'Sair',
                 icon: Icons.exit_to_app,
